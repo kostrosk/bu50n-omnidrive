@@ -9,10 +9,10 @@ Game-disc reading was not tested for this guide.
 
 SDFTool reported successful writes but left this drive on CC04.
 Redumper b767 changed the firmware identity and passed the final power-removal test.
-The exact cause of the earlier SDFTool failures remains unknown.
+The exact cause of the earlier SDFTool failures is unkown to me.
 No custom firmware code was necessary.
 
-> **CAUTION:** A firmware write can make the drive unusable. This setup has no proven recovery procedure.
+> **CAUTION:** A firmware write can brick the drive. Let's be real, it's not my fault if you mess this up.
 
 ## Tested hardware
 
@@ -54,14 +54,7 @@ The BU40N regulatory marking does not establish the installed firmware or report
 Before the successful write, MakeMKV reported BU50N CC04.
 After the write, it reported BU40N 1.00.
 
-The owner reports no separate FRU label on this unit.
-FRU means field-replaceable unit, a service replacement part.
-These photos do not establish the labels on other shipped units.
-See [label transcription notes](evidence/README.md) for the image evidence and OCR corrections.
-
-An Amazon listing can contain different hardware revisions.
-Match the label, platform and original firmware before you use this procedure.
-This result does not prove compatibility with every BU50N.
+I didn't see any Lenovo FRU (part number) on this drive like reported in Amazon comments.
 
 ## Steps
 
@@ -102,16 +95,16 @@ Make sure that the drive reports BU50N CC04.
 Set `$drive` to the drive letter from the output.
 Record your serial number locally so that you can identify the same unit later.
 
-On your Windows computer, in the same PowerShell window, from `C:\BU50N`:
+On a Windows computer, in the same PowerShell window, from `C:\BU50N`:
 
 ```powershell
-$drive = 'E:' # Replace E: with your actual drive letter.
+$drive = 'E:' # Replace E: with your actual drive letter where the usb is plugged in for the BU50N.
 & 'C:\Program Files (x86)\MakeMKV\sdftool.exe' -d $drive --info
 New-Item -ItemType Directory -Force '.\backup' | Out-Null
 & 'C:\Program Files (x86)\MakeMKV\sdftool.exe' -d $drive dump auto -o 'C:\BU50N\backup'
 ```
 
-The information must show MT1959.
+The information must show MT1959 in MakeMKV
 On this CC04 drive, a full firmware dump was disabled.
 The saved dump contained user data only.
 That dump is not a complete recovery image.
@@ -121,11 +114,10 @@ That dump is not a complete recovery image.
 Firmware files are not included here.
 Use your own stock files and the [OmniDrive v1.0.4 build instructions](https://github.com/RibShark/OmniDrive/tree/v1.0.4#building).
 
-Install Git, CMake 3.26 or newer, Ninja, the `arm-none-eabi-gcc` toolchain, armips, Python 3 and pycryptodome.
+Install CMake 3.26 or newer, Ninja, the `arm-none-eabi-gcc` toolchain, armips, Python 3 and pycryptodome.
 Put the command-line tools on your PATH.
-PATH is the list of folders that Windows searches for programs.
 
-On your Windows computer, in PowerShell, from `C:\BU50N`:
+On your Windows computer, in PowerShell, from `C:\BU50N`: ("your PATH")
 
 ```powershell
 git clone --branch v1.0.4 --depth 1 https://github.com/RibShark/OmniDrive.git

@@ -1,0 +1,8 @@
+{
+  "source": "manufacturer-label.jpg",
+  "output": "manufacturer-label.txt",
+  "method": "image-ocr",
+  "confidence": "ocr",
+  "chars": 926,
+  "bytes_in": 608047
+}

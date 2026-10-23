@@ -1,0 +1,8 @@
+{
+  "source": "model-label.jpg",
+  "output": "model-label.txt",
+  "method": "image-ocr",
+  "confidence": "ocr",
+  "chars": 304,
+  "bytes_in": 305154
+}

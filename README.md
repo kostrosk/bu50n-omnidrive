@@ -18,19 +18,30 @@ No custom firmware code was necessary.
 
 | Part | Tested item |
 |---|---|
-| Drive | [JOYIN-BURN BU50N, Amazon B0FK5DBJKG](https://www.amazon.com/dp/B0FK5DBJKG) |
+| Drive listing | [JOYIN-BURN BU50N, Amazon B0FK5DBJKG](https://www.amazon.com/dp/B0FK5DBJKG) |
 | USB cable and supply | [BENFEI SATA-to-USB 3.0, Amazon B07JGT17B8](https://www.amazon.com/dp/B07JGT17B8) |
 | Drive connector | [YARCHONN slimline SATA adapter, Amazon B0GXD6S88P](https://www.amazon.com/dp/B0GXD6S88P) |
 
 The adapter changes the 13-pin slimline connector to a 22-pin SATA connector.
 The BENFEI cable includes a 12 V, 2 A supply.
 
+Amazon lists JOYIN-BURN as the brand.
+The received drive carries Hitachi-LG Data Storage markings.
+Its model field says BU50N, and its regulatory identifier contains BU40N.
+
+![Hitachi-LG manufacturer label with a 5 V DC rating](images/manufacturer-label.jpg)
+
+![BU50N model label with the MSIP-REM-HLD-BU40N regulatory identifier](images/model-label.jpg)
+
 The tested drive label and software showed:
 
 | Item | Value |
 |---|---|
 | Physical model | HL-DT-ST BD-RE BU50N |
+| Manufacturer label | Hitachi-LG Data Storage, Inc. |
 | Label code | ANCK1N0 |
+| Regulatory identifier | `MSIP-REM-HLD-BU40N` |
+| Drive supply marking | 5 V DC |
 | Original firmware | CC04, date 2120-05-29 |
 | Drive platform | MT1959 |
 | Boot mark | `MT1959 Boot BU51` |
@@ -38,6 +49,15 @@ The tested drive label and software showed:
 | Factory | GH |
 | Manufacture date | January 2022 |
 | USB bridge identifier | `152D:0583` |
+
+The BU40N regulatory marking does not establish the installed firmware or reported drive model.
+Before the successful write, MakeMKV reported BU50N CC04.
+After the write, it reported BU40N 1.00.
+
+The owner reports no separate FRU label on this unit.
+FRU means field-replaceable unit, a service replacement part.
+These photos do not establish the labels on other shipped units.
+See [label transcription notes](evidence/README.md) for the image evidence and OCR corrections.
 
 An Amazon listing can contain different hardware revisions.
 Match the label, platform and original firmware before you use this procedure.
@@ -54,7 +74,9 @@ Connect both BENFEI external power and USB.
 Get [MakeMKV](https://www.makemkv.com/download/).
 The tested version was 2.0.0.
 
+Create `C:\BU50N`.
 Get [redumper b767 for Windows x64](https://github.com/superg/redumper/releases/download/b767/redumper-b767-windows-x64.zip).
+Save the archive in `C:\BU50N`.
 Extract the complete archive under `C:\BU50N\redumper`.
 Keep its files together.
 
@@ -68,8 +90,9 @@ On your Windows computer, in PowerShell, from `C:\BU50N`:
 
 ```powershell
 Get-FileHash -Algorithm SHA256 -LiteralPath '.\redumper-b767-windows-x64.zip'
-$redumper = (Get-ChildItem '.\redumper' -Filter redumper.exe -Recurse).FullName
-if (@($redumper).Count -ne 1) { throw 'Keep exactly one redumper.exe in this folder.' }
+$redumperFiles = @(Get-ChildItem '.\redumper' -Filter redumper.exe -Recurse)
+if ($redumperFiles.Count -ne 1) { throw 'Keep exactly one redumper.exe in this folder.' }
+$redumper = $redumperFiles[0].FullName
 & $redumper --help
 & 'C:\Program Files (x86)\MakeMKV\makemkvcon64.exe' f -l
 ```
@@ -240,4 +263,5 @@ This repository contains instructions only, not firmware or a new flasher.
 
 Push changes to your Forgejo repository.
 Use Forgejo's push-mirror settings when you choose to mirror it to GitHub.
-This guide contains no private network addresses, drive serial numbers or personal file paths.
+The guide text contains no private network addresses or personal file paths.
+The owner authorized publication of the supplied photos, which include the unit's serial number and machine-readable markings.

@@ -1,0 +1,13 @@
+# Keep firmware, programs, dumps and private logs local.
+*.bin
+*.exe
+*.dll
+*.zip
+*.7z
+*.tar
+*.log
+backup/
+firmware/
+patched_firmware/
+build/
+.venv/
